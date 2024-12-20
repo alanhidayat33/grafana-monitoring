@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Get the directory of the current script
+SCRIPT_DIR=$(dirname "$(realpath "$0")")
+
 echo "Configuring Node Exporter Textfile"
 
 # Create systemd service file
@@ -29,7 +32,7 @@ sudo mkdir -p /usr/local/bin/node_exporter_textfile/textfile
 sudo mkdir -p /usr/local/bin/node_exporter_textfile/script
 
 #  Copy all scripts from /textfile_custom_metrics to /usr/local/bin/node_exporter_textfile/script
-sudo cp -r ./textfile_custom_metrics/* /usr/local/bin/node_exporter_textfile/script
+sudo cp -r "$SCRIPT_DIR/textfile_custom_metrics"/* /usr/local/bin/node_exporter_textfile/script
 
 # Create trigger script to run the collector every 10 seconds
 echo '# Jalankan setiap 10 detik
