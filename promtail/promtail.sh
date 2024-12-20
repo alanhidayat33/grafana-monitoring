@@ -18,31 +18,11 @@ declare -A whm_log_paths=(
 
 echo "Installing Promtail..."
 
-# Add Grafana repository
-wget -q -O gpg.key https://rpm.grafana.com/gpg.key
-
-# Import the GPG key
-rpm --import gpg.key
-
-# Add the Grafana repository
-echo '[grafana]
-name=grafana
-baseurl=https://rpm.grafana.com
-repo_gpgcheck=1
-enabled=1
-gpgcheck=1
-gpgkey=https://rpm.grafana.com/gpg.key
-sslverify=1
-sslcacert=/etc/pki/tls/certs/ca-bundle.crt' > /etc/yum.repos.d/grafana.repo
-
 # Install Promtail
 dnf install -y promtail
 
 # Enable and start Promtail service
 systemctl enable --now promtail
-
-# Create Promtail configuration directory if it doesn't exist
-mkdir -p /etc/promtail
 
 # Configure Promtail
 cat <<EOF > /etc/promtail/config.yml
