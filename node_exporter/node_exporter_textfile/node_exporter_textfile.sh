@@ -38,13 +38,10 @@ sudo cp -r "$SCRIPT_DIR/textfile_custom_metrics"/* /usr/local/bin/node_exporter_
 echo '# Jalankan setiap 10 detik
 #!/bin/bash
 
-# Jalankan semua file collector setiap 10 detik dalam 1 menit
-for ((i=0; i<6; i++)); do
-  for script in /usr/local/bin/node_exporter_textfile/script/*; do
-    if [[ -x "$script" ]]; then
-      "$script"
-    fi
-  done
+for i in {1..6}
+do
+  /usr/local/bin/node_exporter_textfile/script/service_uptime.sh
+  /usr/local/bin/node_exporter_textfile/script/exim_queue.sh
   sleep 10
 done' | sudo tee /usr/local/bin/node_exporter_textfile/script/trigger.sh > /dev/null
 
