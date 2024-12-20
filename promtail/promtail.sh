@@ -24,6 +24,8 @@ yum install -y promtail
 # Enable and start Promtail service
 systemctl enable --now promtail
 
+sudo mkdir /etc/promtail/config.yml
+
 # Configure Promtail
 cat <<EOF > /etc/promtail/config.yml
 # Minimal config scrapes specific log files.

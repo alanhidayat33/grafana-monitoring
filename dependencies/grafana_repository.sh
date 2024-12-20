@@ -15,14 +15,14 @@ if ! grep -q "\[grafana\]" /etc/yum.repos.d/grafana.repo 2>/dev/null; then
 
     # Add the Grafana repository
     echo '[grafana]
-    name=grafana
-    baseurl=https://rpm.grafana.com
-    repo_gpgcheck=1
-    enabled=1
-    gpgcheck=1
-    gpgkey=https://rpm.grafana.com/gpg.key
-    sslverify=1
-    sslcacert=/etc/pki/tls/certs/ca-bundle.crt' | sudo tee /etc/yum.repos.d/grafana.repo > /dev/null
+name=grafana
+baseurl=https://rpm.grafana.com
+repo_gpgcheck=1
+enabled=1
+gpgcheck=1
+gpgkey=https://rpm.grafana.com/gpg.key
+sslverify=1
+sslcacert=/etc/pki/tls/certs/ca-bundle.crt' | sudo tee /etc/yum.repos.d/grafana.repo > /dev/null
 
     echo "Grafana repository added successfully."
 else
