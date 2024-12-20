@@ -42,3 +42,5 @@ sudo systemctl enable --now node_exporter
 
 # Restart the Node Exporter service
 sudo systemctl restart node_exporter
+
+exit 0

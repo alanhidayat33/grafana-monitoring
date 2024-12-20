@@ -26,3 +26,5 @@ done
 sudo firewall-cmd --reload
 
 echo "Firewall rules have been updated."
+
+exit 0

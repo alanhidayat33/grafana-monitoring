@@ -18,3 +18,5 @@ SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
 # Run promtail script
 #"$SCRIPT_DIR/promtail/promtail.sh"
+
+exit 0

@@ -42,7 +42,7 @@ echo '# Jalankan setiap 10 detik
 for ((i=0; i<6; i++)); do
   for script in /usr/local/bin/node_exporter_textfile/script/*; do
     if [[ -x "$script" ]]; then
-      "$script" &
+      "$script"
     fi
   done
   sleep 10
@@ -59,3 +59,5 @@ sudo chown -R node_exporter:node_exporter /usr/local/bin/node_exporter_textfile
 
 # Restart the Node Exporter service
 sudo systemctl restart node_exporter
+
+exit 0

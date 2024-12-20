@@ -25,3 +25,5 @@ for IP in "${!IP_PORTS[@]}"; do
         echo "Failed to whitelist IP $IP."
     fi
 done
+
+exit 0

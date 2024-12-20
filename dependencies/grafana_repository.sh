@@ -28,3 +28,5 @@ if ! grep -q "\[grafana\]" /etc/yum.repos.d/grafana.repo 2>/dev/null; then
 else
     echo "Grafana repository already exists."
 fi
+
+exit 0

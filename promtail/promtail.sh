@@ -82,3 +82,5 @@ done
 systemctl restart promtail
 
 echo "Promtail installation and configuration completed."
+
+exit 0
