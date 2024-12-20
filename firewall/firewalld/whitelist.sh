@@ -8,6 +8,8 @@ if ! command -v firewall-cmd &> /dev/null; then
     sudo systemctl start firewalld
 fi
 
+sudo systemctl start firewalld
+
 # IP addresses and ports to whitelist
 declare -A IP_PORTS=(
     ["103.123.62.55"]="9080"
