@@ -5,8 +5,8 @@
 services=("lsws.service" "mysqld.service" "pdns.service" "exim.service")
 
 # Lokasi file output untuk Textfile Collector
-status_file="/usr/local/bin/textfile/service_status.prom"
-uptime_file="/usr/local/bin/textfile/service_uptime.prom"
+status_file="/usr/local/bin/node_exporter_textfile/textfile/service_status.prom"
+uptime_file="/usr/local/bin/node_exporter_textfile/textfile/service_uptime.prom"
 
 # Kosongkan isi file status dan uptime terlebih dahulu
 > "$status_file"

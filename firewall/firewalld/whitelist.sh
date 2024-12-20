@@ -4,7 +4,7 @@
 if ! command -v firewall-cmd &> /dev/null; then
     echo "firewalld is not installed. Installing firewalld..."
     sudo yum install -y firewalld
-    sudo systemctl enable --now firewalld
+    sudo systemctl enable firewalld
     sudo systemctl start firewalld
 fi
 
