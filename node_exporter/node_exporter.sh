@@ -5,7 +5,7 @@ NODE_EXPORTER_VERSION="1.8.2"
 # Check if wget is installed
 if ! command -v wget &> /dev/null; then
     echo "wget is not installed. Installing wget..."
-    sudo dnf install -y wget
+    sudo yum install -y wget
 fi
 
 echo "Installing Node Exporter..."

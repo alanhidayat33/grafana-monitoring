@@ -19,7 +19,7 @@ declare -A whm_log_paths=(
 echo "Installing Promtail..."
 
 # Install Promtail
-dnf install -y promtail
+yum install -y promtail
 
 # Enable and start Promtail service
 systemctl enable --now promtail

@@ -3,12 +3,12 @@
 # Check if firewalld is installed
 if ! command -v firewall-cmd &> /dev/null; then
     echo "firewalld is not installed. Installing firewalld..."
-    sudo dnf install -y firewalld
+    sudo yum install -y firewalld
     sudo systemctl enable --now firewalld
     sudo systemctl start firewalld
 fi
 
-sudo systemctl start firewalld
+sudo systemctl restart firewalld
 
 # IP addresses and ports to whitelist
 declare -A IP_PORTS=(
