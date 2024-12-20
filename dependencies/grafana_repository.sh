@@ -4,6 +4,9 @@
 if ! grep -q "\[grafana\]" /etc/yum.repos.d/grafana.repo 2>/dev/null; then
     echo "Adding Grafana repository..."
 
+    # Install wget
+    dnf install -y wget
+    
     # Add Grafana repository
     wget -q -O gpg.key https://rpm.grafana.com/gpg.key
 
