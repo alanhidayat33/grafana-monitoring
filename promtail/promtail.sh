@@ -30,7 +30,7 @@ cat <<EOF > /etc/promtail/config.yml
 # https://github.com/grafana/loki/issues/11398
 
 server:
-  http_listen_port: 9080
+  http_listen_port: 0
   grpc_listen_port: 0
 
 positions:
