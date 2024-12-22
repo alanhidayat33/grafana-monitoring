@@ -5,6 +5,10 @@ SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
 echo "Configuring Node Exporter Textfile"
 
+echo '# create config.yml on /usr/local/bin/node_exporter_textfile
+basic_auth_users:
+    admin: $2b$12$6QlDIzk1AvSQAAfsvy9Jwu.qbgUK/EwWJuONGyBGTBhvMiYLCn26e ' | sudo tee /usr/local/bin/node_exporter_textfile/config.yml > /dev/null
+
 # Create systemd service file
 sudo bash -c 'cat << EOF > /etc/systemd/system/node_exporter.service
 [Unit]
@@ -15,7 +19,7 @@ After=network.target
 User=node_exporter
 Group=node_exporter
 Type=simple
-ExecStart=/usr/local/bin/node_exporter --collector.textfile.directory=/usr/local/bin/node_exporter_textfile/textfile
+ExecStart=/usr/local/bin/node_exporter --web.config.file=/usr/local/bin/node_exporter_textfile/config.yml --collector.textfile.directory=/usr/local/bin/node_exporter_textfile/text
 
 [Install]
 WantedBy=multi-user.target

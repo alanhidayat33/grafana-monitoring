@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # Daftar nama layanan yang akan diperiksa
