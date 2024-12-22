@@ -5,10 +5,6 @@ SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
 echo "Configuring Node Exporter Textfile"
 
-echo '# create config.yml on /usr/local/bin/node_exporter_textfile
-basic_auth_users:
-    admin: $2b$12$6QlDIzk1AvSQAAfsvy9Jwu.qbgUK/EwWJuONGyBGTBhvMiYLCn26e ' | sudo tee /usr/local/bin/node_exporter_textfile/config.yml > /dev/null
-
 # Create systemd service file
 sudo bash -c 'cat << EOF > /etc/systemd/system/node_exporter.service
 [Unit]
@@ -34,6 +30,11 @@ sudo mkdir -p /usr/local/bin/node_exporter_textfile/textfile
 
 # Create Node Exporter collector file directory
 sudo mkdir -p /usr/local/bin/node_exporter_textfile/script
+
+echo '# create config.yml on /usr/local/bin/node_exporter_textfile
+basic_auth_users:
+    admin: $2b$12$6QlDIzk1AvSQAAfsvy9Jwu.qbgUK/EwWJuONGyBGTBhvMiYLCn26e ' 
+| sudo tee /usr/local/bin/node_exporter_textfile/config.yml > /dev/null
 
 #  Copy all scripts from /textfile_custom_metrics to /usr/local/bin/node_exporter_textfile/script
 sudo cp -r "$SCRIPT_DIR/textfile_custom_metrics"/* /usr/local/bin/node_exporter_textfile/script
