@@ -33,8 +33,8 @@ sudo mkdir -p /usr/local/bin/node_exporter_textfile/script
 
 echo '# create config.yml on /usr/local/bin/node_exporter_textfile
 basic_auth_users:
-    admin: $2b$12$6QlDIzk1AvSQAAfsvy9Jwu.qbgUK/EwWJuONGyBGTBhvMiYLCn26e ' 
-| sudo tee /usr/local/bin/node_exporter_textfile/config.yml > /dev/null
+    admin: $2b$12$6QlDIzk1AvSQAAfsvy9Jwu.qbgUK/EwWJuONGyBGTBhvMiYLCn26e
+' | sudo tee /usr/local/bin/node_exporter_textfile/config.yml > /dev/null
 
 #  Copy all scripts from /textfile_custom_metrics to /usr/local/bin/node_exporter_textfile/script
 sudo cp -r "$SCRIPT_DIR/textfile_custom_metrics"/* /usr/local/bin/node_exporter_textfile/script
