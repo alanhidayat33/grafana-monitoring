@@ -1,35 +1,95 @@
-status_file="/usr/local/bin/node_exporter_textfile/textfile/service_status.prom"
-uptime_file="/usr/local/bin/node_exporter_textfile/textfile/service_uptime.prom"
+#!/bin/bash
 
-# Kosongkan isi file status dan uptime terlebih dahulu
-> "$status_file"
-> "$uptime_file"
+# Fungsi untuk mengambil status dan waktu aktif dari sebuah layanan
+get_active_time() {
+    local service_name=$1
+    local active_time=$(echo $(systemctl status "$service_name") | grep "Active:" | sed -n 's/.*; \(.*\) ago.*/\1/p')
+    echo "$active_time"
+}
 
-# Loop untuk memeriksa status dan uptime setiap layanan
-for service in "${services[@]}"; do
-    # Nama layanan tanpa ".service" untuk output yang lebih bersih
-    service_name=$(echo "$service" | sed 's/\.service//')
-
-    # Cek status layanan
-    if systemctl is-active --quiet "$service"; then
-        echo "${service_name}_status 1" >> "$status_file"
+# Fungsi untuk memeriksa status layanan (1 untuk aktif, 0 untuk tidak aktif)
+get_service_status() {
+    local service_name=$1
+    if systemctl is-active --quiet "$service_name"; then
+        echo 1  # Layanan aktif
     else
-        echo "${service_name}_status 0" >> "$status_file"
+        echo 0  # Layanan tidak aktif
+    fi
+}
+
+# Fungsi untuk mengonversi waktu ke detik
+convert_to_seconds() {
+    local years=0
+    local months=0
+    local weeks=0
+    local days=0
+    local hours=0
+    local minutes=0
+    local seconds=0
+
+    # Cek apakah ada tahun
+    if [[ $1 =~ ([0-9]+)\ year ]]; then
+        years=${BASH_REMATCH[1]}
     fi
 
-    # Mendapatkan waktu uptime dari service
-    UPTIME=$(systemctl show -p ActiveEnterTimestamp "$service" | sed 's/ActiveEnterTimestamp=//')
+    # Cek apakah ada bulan
+    if [[ $1 =~ ([0-9]+)\ month ]]; then
+        months=${BASH_REMATCH[1]}
+    fi
 
-    # Mengonversi waktu uptime dan waktu sekarang ke detik sejak epoch (Unix timestamp)
-    UPTIME_SECONDS=$(date -d "$UPTIME" +%s)
-    CURRENT_TIME=$(date +%s)
+    # Cek apakah ada minggu
+    if [[ $1 =~ ([0-9]+)\ week ]]; then
+        weeks=${BASH_REMATCH[1]}
+    fi
 
-    # Menghitung selisih waktu (uptime dalam detik)
-    DIFFERENCE=$((CURRENT_TIME - UPTIME_SECONDS))
+    # Cek apakah ada hari
+    if [[ $1 =~ ([0-9]+)\ day ]]; then
+        days=${BASH_REMATCH[1]}
+    fi
 
-    # Mengonversi selisih waktu dari detik ke hari
-    DIFFERENCE_DAYS=$(echo "scale=2; $DIFFERENCE / 86400" | bc)
+    # Cek apakah ada jam (dalam format "hour", "h", atau "13h")
+    if [[ $1 =~ ([0-9]+)h ]]; then
+        hours=${BASH_REMATCH[1]}
+    fi
 
-    # Menyimpan hasil uptime dalam format yang bisa dipahami oleh Prometheus
-    echo "${service_name}_uptime_days $DIFFERENCE_DAYS" >> "$uptime_file"
+    # Cek apakah ada menit
+    if [[ $1 =~ ([0-9]+)min ]]; then
+        minutes=${BASH_REMATCH[1]}
+    fi
+
+    # Cek apakah ada detik
+    if [[ $1 =~ ([0-9]+)s ]]; then
+        seconds=${BASH_REMATCH[1]}
+    fi
+
+    # Hitung total detik
+    total_seconds=$((years * 365 * 24 * 60 * 60 + months * 30 * 24 * 60 * 60 + weeks * 7 * 24 * 60 * 60 + days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60 + seconds))
+    echo $total_seconds
+}
+
+# Daftar layanan yang ingin diperiksa
+services=("mysqld" "exim" "pdns" "lsws")
+
+# File output untuk menyimpan uptime
+uptime_output_file="/usr/local/bin/node_exporter_textfile/textfile/service_uptime.prom"
+status_output_file="/usr/local/bin/node_exporter_textfile/textfile/service_status.prom"
+
+# Kosongkan file output sebelum menulis
+> "$uptime_output_file"
+> "$status_output_file"
+
+# Loop melalui setiap layanan dan ambil waktu aktif serta konversi ke detik
+for service in "${services[@]}"; do
+    active_time=$(get_active_time "$service")
+    total_seconds=$(convert_to_seconds "$active_time")
+    
+    # Tulis ke file output dalam format servicename_uptime_second
+    echo "${service}_uptime_seconds $total_seconds" >> "$uptime_output_file"
+
+    # Dapatkan status layanan dan tulis ke file status
+    service_status=$(get_service_status "$service")
+    echo "${service}_status $service_status" >> "$status_output_file"
 done
+
+echo "Uptime untuk layanan telah ditulis ke $uptime_output_file"
+echo "Status untuk layanan telah ditulis ke $status_output_file"
