@@ -1,9 +1,3 @@
-#!/bin/bash
-
-# Daftar nama layanan yang akan diperiksa
-services=("lsws.service" "mysqld.service" "pdns.service" "exim.service")
-
-# Lokasi file output untuk Textfile Collector
 status_file="/usr/local/bin/node_exporter_textfile/textfile/service_status.prom"
 uptime_file="/usr/local/bin/node_exporter_textfile/textfile/service_uptime.prom"
 
@@ -26,13 +20,16 @@ for service in "${services[@]}"; do
     # Mendapatkan waktu uptime dari service
     UPTIME=$(systemctl show -p ActiveEnterTimestamp "$service" | sed 's/ActiveEnterTimestamp=//')
 
-    # Mengonversi waktu uptime dan waktu sekarang ke detik sejak epoch (Unix timestamp)                                                                                                                        p)
+    # Mengonversi waktu uptime dan waktu sekarang ke detik sejak epoch (Unix timestamp)
     UPTIME_SECONDS=$(date -d "$UPTIME" +%s)
     CURRENT_TIME=$(date +%s)
 
     # Menghitung selisih waktu (uptime dalam detik)
     DIFFERENCE=$((CURRENT_TIME - UPTIME_SECONDS))
 
+    # Mengonversi selisih waktu dari detik ke hari
+    DIFFERENCE_DAYS=$(echo "scale=2; $DIFFERENCE / 86400" | bc)
+
     # Menyimpan hasil uptime dalam format yang bisa dipahami oleh Prometheus
-    echo "${service_name}_uptime_seconds $DIFFERENCE" >> "$uptime_file"
+    echo "${service_name}_uptime_days $DIFFERENCE_DAYS" >> "$uptime_file"
 done
