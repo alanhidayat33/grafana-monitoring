@@ -33,7 +33,7 @@ sudo mkdir -p /usr/local/bin/node_exporter_textfile/script
 
 echo '# create config.yml on /usr/local/bin/node_exporter_textfile
 basic_auth_users:
-    idcloudhost: $2b$12$BB/2xzcBasp6/QbLqnCXpecaNFoqF9InJl5ne1F1NV7VfaHlLjAoK
+    idcloudhost2024: $2b$12$BB/2xzcBasp6/QbLqnCXpecaNFoqF9InJl5ne1F1NV7VfaHlLjAoK
 ' | sudo tee /usr/local/bin/node_exporter_textfile/config.yml > /dev/null
 
 #  Copy all scripts from /textfile_custom_metrics to /usr/local/bin/node_exporter_textfile/script
