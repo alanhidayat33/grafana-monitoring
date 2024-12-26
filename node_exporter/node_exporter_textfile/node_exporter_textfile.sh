@@ -33,7 +33,7 @@ sudo mkdir -p /usr/local/bin/node_exporter_textfile/script
 
 echo '# create config.yml on /usr/local/bin/node_exporter_textfile
 basic_auth_users:
-    admin: $2b$12$6QlDIzk1AvSQAAfsvy9Jwu.qbgUK/EwWJuONGyBGTBhvMiYLCn26e
+    idcloudhost: $2b$12$BB/2xzcBasp6/QbLqnCXpecaNFoqF9InJl5ne1F1NV7VfaHlLjAoK
 ' | sudo tee /usr/local/bin/node_exporter_textfile/config.yml > /dev/null
 
 #  Copy all scripts from /textfile_custom_metrics to /usr/local/bin/node_exporter_textfile/script
@@ -47,6 +47,8 @@ for i in {1..6}
 do
   /usr/local/bin/node_exporter_textfile/script/service_uptime.sh
   /usr/local/bin/node_exporter_textfile/script/exim_queue.sh
+  /usr/local/bin/node_exporter_textfile/script/total_suspended.sh
+  /usr/local/bin/node_exporter_textfile/script/total_users.sh
   sleep 10
 done' | sudo tee /usr/local/bin/node_exporter_textfile/script/trigger.sh > /dev/null
 
