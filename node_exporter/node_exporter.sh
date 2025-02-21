@@ -14,7 +14,7 @@ echo "Installing Node Exporter..."
 cd /usr/src || exit
 wget https://github.com/prometheus/node_exporter/releases/download/v$NODE_EXPORTER_VERSION/node_exporter-$NODE_EXPORTER_VERSION.linux-amd64.tar.gz
 
-tar -xf node_exporter-$NODE_EXPORTER_VERSION.linux-amd64.tar.gz
+tar --no-same-owner -xf  node_exporter-$NODE_EXPORTER_VERSION.linux-amd64.tar.gz
 mv node_exporter-$NODE_EXPORTER_VERSION.linux-amd64/node_exporter /usr/local/bin/
 
 # Create Node Exporter user
@@ -31,6 +31,7 @@ User=node_exporter
 Group=node_exporter
 Type=simple
 ExecStart=/usr/local/bin/node_exporter
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
