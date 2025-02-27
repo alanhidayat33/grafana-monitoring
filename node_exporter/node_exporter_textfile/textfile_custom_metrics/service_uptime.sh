@@ -90,6 +90,3 @@ for service in "${services[@]}"; do
     service_status=$(get_service_status "$service")
     echo "${service}_status $service_status" >> "$status_output_file"
 done
-
-echo "Uptime untuk layanan telah ditulis ke $uptime_output_file"
-echo "Status untuk layanan telah ditulis ke $status_output_file"
