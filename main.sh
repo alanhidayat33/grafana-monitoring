@@ -14,9 +14,9 @@ SCRIPT_DIR=$(dirname "$(realpath "$0")")
 "$SCRIPT_DIR/node_exporter/main.sh"
 
 # Run add Grafana repository script
-"$SCRIPT_DIR/dependencies/grafana_repository.sh"
+#"$SCRIPT_DIR/dependencies/grafana_repository.sh"
 
 # Run promtail script
-"$SCRIPT_DIR/promtail/promtail.sh"
+#"$SCRIPT_DIR/promtail/promtail.sh"
 
 exit 0

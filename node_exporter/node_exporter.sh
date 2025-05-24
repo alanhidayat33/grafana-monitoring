@@ -30,7 +30,7 @@ After=network.target
 User=node_exporter
 Group=node_exporter
 Type=simple
-ExecStart=/usr/local/bin/node_exporter
+ExecStart=/usr/local/bin/node_exporter --web.config.file=/usr/local/bin/node_exporter_textfile/config.yml
 Restart=always
 
 [Install]
@@ -40,6 +40,17 @@ EOF'
 # Reload systemd, enable start the service
 sudo systemctl daemon-reload
 sudo systemctl enable --now node_exporter
+
+# Create directory for Node Exporter collector
+sudo mkdir -p /usr/local/bin/node_exporter_textfile/
+
+echo '# create config.yml on /usr/local/bin/node_exporter_textfile
+basic_auth_users:
+    idcloudhost2030: $2b$12$dbhdMlPgHENuFUmLoA9.puAzaB.FhzEsrHe1Fp6jqmFuek6sgovC6
+' | sudo tee /usr/local/bin/node_exporter_textfile/config.yml > /dev/null
+
+# Berikan hak akses pada direktori dan file
+sudo chown -R node_exporter:node_exporter /usr/local/bin/node_exporter_textfile
 
 # Restart the Node Exporter service
 sudo systemctl restart node_exporter

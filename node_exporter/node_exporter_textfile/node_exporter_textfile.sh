@@ -16,6 +16,7 @@ User=node_exporter
 Group=node_exporter
 Type=simple
 ExecStart=/usr/local/bin/node_exporter --web.config.file=/usr/local/bin/node_exporter_textfile/config.yml --collector.textfile.directory=/usr/local/bin/node_exporter_textfile/textfile
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
