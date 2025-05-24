@@ -7,6 +7,6 @@ SCRIPT_DIR=$(dirname "$(realpath "$0")")
 "$SCRIPT_DIR/node_exporter.sh"
 
 # Run the Node Exporter Textfile script
-"$SCRIPT_DIR/node_exporter_textfile/node_exporter_textfile.sh"
+#"$SCRIPT_DIR/node_exporter_textfile/node_exporter_textfile.sh"
 
 exit 0
