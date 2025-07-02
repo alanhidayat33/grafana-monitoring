@@ -46,7 +46,7 @@ sudo mkdir -p /usr/local/bin/node_exporter_textfile/
 
 echo '# create config.yml on /usr/local/bin/node_exporter_textfile
 basic_auth_users:
-    idcloudhost2030: $2b$12$dbhdMlPgHENuFUmLoA9.puAzaB.FhzEsrHe1Fp6jqmFuek6sgovC6
+    idcloudhost2024: $2b$12$BB/2xzcBasp6/QbLqnCXpecaNFoqF9InJl5ne1F1NV7VfaHlLjAoK
 ' | sudo tee /usr/local/bin/node_exporter_textfile/config.yml > /dev/null
 
 # Berikan hak akses pada direktori dan file
